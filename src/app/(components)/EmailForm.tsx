@@ -30,7 +30,7 @@ export const EmailForm: React.FC = () => {
             <div className="flex gap-3">
                 <input
                     type="email"
-                    className="flex-1 px-5 py-3 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:border-[#6366f1] text-base"
+                    className="flex-1 min-w-[100px] px-5 py-3 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:border-[#6366f1] text-base"
                     placeholder="이메일 입력"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

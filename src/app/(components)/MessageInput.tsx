@@ -19,7 +19,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSend, disabled }) 
         <div className="flex items-center gap-3 p-4 border-t bg-white">
             <input
                 type="text"
-                className="flex-1 px-5 py-3 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:border-[#6366f1] text-base"
+                className="flex-1 min-w-[100px] px-5 py-3 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:border-[#6366f1] text-base"
                 placeholder="메시지를 입력하세요..."
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
