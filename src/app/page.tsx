@@ -1,95 +1,34 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { mbtiList } from "../lib/mbtiData";
+import { useAppState } from "../lib/state";
+import { MbtiCard } from "./(components)/MbtiCard";
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+export default function HomePage() {
+    const router = useRouter();
+    const { setSelectedMbti } = useAppState();
+    const [selected, setSelected] = useState<string | null>(null);
+
+    const handleSelect = (type: string) => {
+        setSelected(type);
+        setSelectedMbti(type);
+        setTimeout(() => router.push("/chat"), 400);
+    };
+
+    return (
+        <main className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-24 bg-gradient-to-br from-white via-[#f6f7fb] to-[#ececff]">
+            <section className="w-full max-w-xl mx-auto flex flex-col items-center">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-[#6366f1] mb-8 tracking-tight text-center">대화하고 싶은 MBTI를 선택하세요.</h1>
+                <p className="mb-10 text-gray-400 text-base text-center">MBTI를 선택하면 AI와 대화를 시작할 수 있습니다.</p>
+
+                <div className="grid grid-cols-1 gap-6 w-full">
+                    {mbtiList.map((mbti) => (
+                        <MbtiCard key={mbti.type} type={mbti.type} desc={mbti.desc} selected={selected === mbti.type} onClick={() => handleSelect(mbti.type)} />
+                    ))}
+                </div>
+            </section>
+        </main>
+    );
 }
