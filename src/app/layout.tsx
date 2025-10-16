@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,6 +26,17 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YYFT6Q25C3" />
+                <Script id="google-analytics">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-YYFT6Q25C3');
+                    `}
+                </Script>
+            </head>
             <body className={`${geistSans.variable} ${geistMono.variable}`}>
                 {children} <Analytics />
             </body>
